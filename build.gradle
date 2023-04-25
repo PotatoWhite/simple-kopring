@@ -1,0 +1,45 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id 'org.springframework.boot' version '3.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.22'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.7.22'
+}
+
+group = 'me.potato'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //mysql
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    // r2dbc mysql
+    implementation 'dev.miku:r2dbc-mysql:0.8.2.RELEASE'
+
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+    implementation 'io.projectreactor.kotlin:reactor-kotlin-extensions'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+}
+
+tasks.withType(KotlinCompile) {
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjsr305=strict']
+        jvmTarget = '17'
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
